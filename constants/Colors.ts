@@ -1,26 +1,18 @@
 /**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
+ * A continuación, se definen los colores utilizados en la aplicación, tanto para el modo claro como para el modo oscuro.
+ * 
+ * Existen otras maneras de manejar estilos en React Native, como:
+ * - [Nativewind](https://www.nativewind.dev/) → Usa Tailwind CSS en React Native.
+ * - [Tamagui](https://tamagui.dev/) → Permite diseño optimizado para web y móvil.
+ * - [Unistyles](https://reactnativeunistyles.vercel.app) → Sistema de temas con TypeScript.
  */
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
-
 export const Colors = {
-  light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
-  },
-  dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
-  },
-};
+    darkGray: '#2D2D2D', // Gris oscuro, usado para botones y fondos.
+    lightGray: '#9B9B9B', // Gris claro, usado para botones secundarios.
+    orage: '#FF9427', // Naranja, usado para los botones de operaciones.
+
+    textPrimary: 'white', // Color del texto principal.
+    textSecondary: '#666666', // Color del texto secundario.
+    background: '#000000', // Color de fondo de la aplicación.
+} as const; // `as const` convierte el objeto en un tipo de solo lectura (readonly).

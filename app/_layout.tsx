@@ -1,39 +1,41 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { Platform, View } from 'react-native'; // Importa Platform para detectar el sistema operativo y View para la estructura de la UI.
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { Slot } from 'expo-router'; // Slot es un contenedor que renderiza la ruta activa en Expo Router.
+import { StatusBar } from 'expo-status-bar'; // Componente para personalizar la barra de estado.
+import { useFonts } from 'expo-font'; // Hook para cargar fuentes personalizadas.
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+import { globalStyles } from '@/styles/global-styles'; // Importa estilos globales.
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
+import * as NavigationBar from 'expo-navigation-bar'; // Importa el módulo para controlar la barra de navegación en Android.
+
+// Verifica si la plataforma es Android.
+const isAndroid = Platform.OS === 'android';
+
+// Si es Android, cambia el color de la barra de navegación a negro.
+if (isAndroid) {
+  NavigationBar.setBackgroundColorAsync('black');
+}
+
+const RootLayout = () => {
+  // Carga la fuente personalizada "SpaceMono".
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
+  // Si la fuente aún no está cargada, devuelve null (evita mostrar contenido sin la fuente correcta).
   if (!loaded) {
     return null;
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <View style={globalStyles.background}>
+      {/* Slot renderiza la pantalla correspondiente según la navegación */}
+      <Slot />
+
+      {/* Define el estilo de la barra de estado como "light" (texto en blanco) */}
+      <StatusBar style="light" />
+    </View>
   );
-}
+};
+
+export default RootLayout; // Exporta el componente para que pueda ser usado en la app.
